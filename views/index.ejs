@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body>
+    <h1 class="title"><%= title %></h1>
+    <ul class="message-container">
+      <% messages.forEach((message) => { %>
+      <li>
+        <div class="user">User: <%= message.user %></div>
+        <div class="date">Date: <%= message.added %></div>
+        <div class="message">Message: <%= message.text %></div>
+      </li>
+      <div class="line-br"></div>
+      <% }) %>
+    </ul>
+  </body>
+</html>
