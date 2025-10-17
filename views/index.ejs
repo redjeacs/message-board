@@ -11,6 +11,7 @@
         <div class="user">User: <%= message.user %></div>
         <div class="date">Date: <%= message.added %></div>
         <div class="message">Message: <%= message.text %></div>
+        <a href="/message/<%= message.id %>"><button>Open</button></a>
       </li>
       <div class="line-br"></div>
       <% }) %>
