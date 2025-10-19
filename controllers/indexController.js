@@ -1,5 +1,5 @@
 const CustomNotFoundError = require("../errors/CustomNotFoundError");
-const messages = require("../messages");
+const messages = require("../db/messages");
 
 async function getMessages(req, res) {
   const data = await messages.getMessages();
