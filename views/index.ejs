@@ -8,7 +8,7 @@
     <ul class="message-container">
       <% messages.forEach((message) => { %>
       <li>
-        <div class="user">User: <%= message.user %></div>
+        <div class="username">User: <%= message.username %></div>
         <div class="date">Date: <%= message.added %></div>
         <div class="message">Message: <%= message.text %></div>
         <a href="/message/<%= message.id %>"><button>Open</button></a>

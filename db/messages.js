@@ -16,7 +16,7 @@ exports.getMessageById = async (messageId) => {
 exports.createMessage = async (messageDetails) => {
   const currentDate = new Date();
   await pool.query(
-    'INSERT INTO messages (text, "user", added) VALUES ($1, $2, $3)',
-    [messageDetails.text, messageDetails.user, currentDate.toISOString()]
+    "INSERT INTO messages (text, username, added) VALUES ($1, $2, $3)",
+    [messageDetails.text, messageDetails.username, currentDate.toISOString()]
   );
 };
