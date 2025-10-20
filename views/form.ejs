@@ -4,6 +4,7 @@
   </head>
   <body>
     <h1>New Messagess</h1>
+    <%- include('partials/errors.ejs') %>
     <form method="POST" action="/new" class="message-form">
       <input type="text" id="author" name="username" placeholder="name" />
       <textarea name="text" id="text" placeholder="your message"></textarea>

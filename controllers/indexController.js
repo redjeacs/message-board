@@ -1,12 +1,27 @@
 const CustomNotFoundError = require("../errors/CustomNotFoundError");
 const messages = require("../db/messages");
+const { body, validationResult, matchedData } = require("express-validator");
 
-async function getMessages(req, res) {
+const validateMessage = [
+  body("text")
+    .trim()
+    .isLength({ min: 1, max: 200 })
+    .withMessage("Text is required and must be between 1 and 200 characters"),
+  body("username")
+    .trim()
+    .isLength({ min: 1, max: 10 })
+    .withMessage(
+      "Username is required and must be between 1 and 10 characters"
+    ),
+];
+
+exports.getMessages = async (req, res) => {
   const data = await messages.getMessages();
+  console.log(data);
   res.render("index", { title: "Mini Messageboard", messages: data });
-}
+};
 
-async function getMessageById(req, res) {
+exports.getMessageById = async (req, res) => {
   const messageId = parseInt(req.params.id);
 
   if (isNaN(messageId)) {
@@ -20,15 +35,22 @@ async function getMessageById(req, res) {
   }
 
   res.render("message", { message: message });
-}
+};
 
-async function createMessage(req, res) {
-  const messageDetails = req.body;
-  if (!messageDetails) {
-    throw new CustomNotFoundError("no new message!");
-  }
-  messages.createMessage(messageDetails);
-  res.redirect("/");
-}
-
-module.exports = { getMessageById, getMessages, createMessage };
+exports.createMessage = [
+  validateMessage,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("form", {
+        errors: errors.array(),
+      });
+    }
+    const { text, username } = matchedData(req);
+    if (!text || !username) {
+      throw new CustomNotFoundError("no new message!");
+    }
+    await messages.createMessage({ text, username });
+    res.redirect("/");
+  },
+];
