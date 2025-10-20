@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Client } = require("pg");
 
 const SQL = `
@@ -18,6 +19,9 @@ INSERT INTO messages (text, username, added) VALUES
 async function populate() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   });
 
   try {
